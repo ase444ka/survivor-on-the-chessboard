@@ -1,0 +1,22 @@
+.white {
+  background-color: antiquewhite;
+}
+
+.black {
+  background-color: rgb(29, 29, 29);
+}
+
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.reverse {
+    border: 1px solid transparent;
+    border-radius: 50%;
+    width: 80%;
+    height: 80%;
+    background-color: rgb(166, 241, 143);
+}
