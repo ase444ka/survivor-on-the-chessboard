@@ -1,44 +1,75 @@
 import styles from './Chessboard.module.css';
-import {useState, useMemo} from 'react';
+import {useState, useEffect} from 'react';
 
 import Square from '../square/Square';
 
-// const chessArray = Array.from({length: 64}, (v, i) => i);
-//
+const generateNewArray = () => {
+  const arr = [];
+  for (let i = 0; i < 64; i++) {
+    arr.push(+!!(Math.floor(Math.random() * 10) % 2));
+  }
+  return arr;
+};
+
+const array = generateNewArray();
+
 const Chessboard = (props) => {
   let firstWhite = true;
   let white = true;
   let k = 0;
-  const resultView = [];
+  const [resultArray, setResultArray] = useState(array);
   const [guessed, setGuessed] = useState(null);
-  const [isGuessed, setIsGuessed] = useState(false);
-  const [effect, setEffect] = useState(false)
-  /*   let zone1 = 0
-  let zone2 = 0
-  let zone3 = 0
-  let zone4 = 0
-  let zone5 = 0
-  let zone6 = 0 */
-  const resultArray = useMemo(() => {
-    const arr = [];
-    for (let i = 0; i < 64; i++) {
-        arr.push(+!!(Math.floor(Math.random() * 10) % 2))
+
+  const [effect, setEffect] = useState(false);
+
+  useEffect(() => {
+    if (props.step === 1) {
+      setResultArray(generateNewArray())
     }
-    return arr
-  }, []);
+  }, [props.step]);
 
-
-  const handleClick = (e) => {
-    if (isGuessed) return;
-    setGuessed(+e.currentTarget.id);
-    setIsGuessed(true);
-    setEffect(true)
+  const guess = (id) => {
+    setGuessed(id);
+    setEffect(true);
     setTimeout(() => {
-        setEffect(false)
-    }, 500)
-    props.doStep()
+      setEffect(false);
+    }, 500);
   };
 
+  const changeBoardState = (id) => {
+    setResultArray((prev) => {
+      const newState = [...prev];
+      newState[id] = +!newState[id];
+      return newState;
+    });
+  };
+
+  const checkYourGuess = (id) => {
+    if (id === guessed) {
+      console.log('true');
+    } else {
+      console.log('false');
+    }
+  };
+
+  const handleClick = (e) => {
+    switch (props.step) {
+      case 1:
+        guess(+e.currentTarget.id);
+        break;
+      case 2:
+        changeBoardState(+e.currentTarget.id);
+        break;
+      case 3:
+        checkYourGuess(+e.currentTarget.id);
+        break;
+      default:
+        return;
+    }
+    props.doStep();
+  };
+
+  let resultView = [];
   for (let i = 0; i < 8; i++) {
     white = firstWhite;
     for (let j = 0; j < 8; j++) {
@@ -49,7 +80,7 @@ const Chessboard = (props) => {
           id={k}
           reverse={!!resultArray[k]}
           clicked={k === guessed && effect}
-          clickable={!isGuessed}
+          clickable={props.step !== 4}
           onClick={handleClick}
         />
       );
