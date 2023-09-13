@@ -12,6 +12,7 @@ const Chessboard = (props) => {
   const resultView = [];
   const [guessed, setGuessed] = useState(null);
   const [isGuessed, setIsGuessed] = useState(false);
+  const [effect, setEffect] = useState(false)
   /*   let zone1 = 0
   let zone2 = 0
   let zone3 = 0
@@ -29,8 +30,12 @@ const Chessboard = (props) => {
 
   const handleClick = (e) => {
     if (isGuessed) return;
-    setGuessed(e.currentTarget.id);
+    setGuessed(+e.currentTarget.id);
     setIsGuessed(true);
+    setEffect(true)
+    setTimeout(() => {
+        setEffect(false)
+    }, 500)
     props.doStep()
   };
 
@@ -43,6 +48,7 @@ const Chessboard = (props) => {
           key={k}
           id={k}
           reverse={!!resultArray[k]}
+          clicked={k === guessed && effect}
           clickable={!isGuessed}
           onClick={handleClick}
         />

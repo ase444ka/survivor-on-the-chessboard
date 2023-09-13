@@ -12,6 +12,10 @@
   align-items: center;
 }
 
+.choosen {
+  transform: scale(1.2);
+}
+
 
 .reverse {
     border: 1px solid transparent;
