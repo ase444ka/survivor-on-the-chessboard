@@ -5,7 +5,7 @@ import Square from '../square/Square';
 
 // const chessArray = Array.from({length: 64}, (v, i) => i);
 //
-const Chessboard = () => {
+const Chessboard = (props) => {
   let firstWhite = true;
   let white = true;
   let k = 0;
@@ -31,6 +31,7 @@ const Chessboard = () => {
     if (isGuessed) return;
     setGuessed(e.currentTarget.id);
     setIsGuessed(true);
+    props.doStep()
   };
 
   for (let i = 0; i < 8; i++) {
