@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/survivor-on-the-chessboard/static/css/main.db2a4b2e.css",
+    "main.js": "/survivor-on-the-chessboard/static/js/main.e89cf5bc.js",
+    "static/js/787.8363e7b8.chunk.js": "/survivor-on-the-chessboard/static/js/787.8363e7b8.chunk.js",
+    "index.html": "/survivor-on-the-chessboard/index.html",
+    "main.db2a4b2e.css.map": "/survivor-on-the-chessboard/static/css/main.db2a4b2e.css.map",
+    "main.e89cf5bc.js.map": "/survivor-on-the-chessboard/static/js/main.e89cf5bc.js.map",
+    "787.8363e7b8.chunk.js.map": "/survivor-on-the-chessboard/static/js/787.8363e7b8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db2a4b2e.css",
+    "static/js/main.e89cf5bc.js"
+  ]
+}
