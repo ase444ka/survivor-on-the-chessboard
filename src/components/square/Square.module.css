@@ -28,3 +28,11 @@
 .clickable {
   cursor: pointer;
 }
+
+.wrong {
+  background-color: brown;
+}
+
+.right {
+  background-color: chartreuse;
+}

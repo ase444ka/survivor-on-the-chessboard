@@ -19,14 +19,27 @@ const Chessboard = (props) => {
   let k = 0;
   const [resultArray, setResultArray] = useState(array);
   const [guessed, setGuessed] = useState(null);
+  const [purposed, setPurposed] = useState(null);
 
   const [effect, setEffect] = useState(false);
 
   useEffect(() => {
     if (props.step === 1) {
-      setResultArray(generateNewArray())
+      setResultArray(generateNewArray());
+      setGuessed(null)
+      setPurposed(null)
     }
   }, [props.step]);
+
+  useEffect(() => {
+    if (guessed === null || purposed === null) return
+    if (guessed === purposed) {
+      props.showSuccessOrNot('success')
+    } else {
+      props.showSuccessOrNot('error')
+    }
+
+  }, [guessed, purposed])
 
   const guess = (id) => {
     setGuessed(id);
@@ -36,6 +49,14 @@ const Chessboard = (props) => {
     }, 500);
   };
 
+  const purpose = (id) => {
+    setPurposed(id)
+    setEffect(true);
+    setTimeout(() => {
+      setEffect(false);
+    }, 500);
+  }
+
   const changeBoardState = (id) => {
     setResultArray((prev) => {
       const newState = [...prev];
@@ -44,13 +65,17 @@ const Chessboard = (props) => {
     });
   };
 
-  const checkYourGuess = (id) => {
-    if (id === guessed) {
-      console.log('true');
-    } else {
-      console.log('false');
-    }
+  const checkClick = (k) => {
+    return (k === guessed || k === purposed) && effect;
   };
+
+  const checkRight = (k) => {
+    return (purposed !== null && guessed === k)
+  }
+
+  const checkWrong = (k) => {
+    return (purposed !== null && purposed !== guessed && purposed === k)
+  }
 
   const handleClick = (e) => {
     switch (props.step) {
@@ -61,7 +86,7 @@ const Chessboard = (props) => {
         changeBoardState(+e.currentTarget.id);
         break;
       case 3:
-        checkYourGuess(+e.currentTarget.id);
+        purpose(+e.currentTarget.id)
         break;
       default:
         return;
@@ -79,9 +104,11 @@ const Chessboard = (props) => {
           key={k}
           id={k}
           reverse={!!resultArray[k]}
-          clicked={k === guessed && effect}
-          clickable={props.step !== 4}
+          clicked={checkClick(k)}
+          clickable={props.step < 4}
           onClick={handleClick}
+          right={checkRight(k)}
+          wrong={checkWrong(k)}
         />
       );
       white = !white;

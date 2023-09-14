@@ -5,7 +5,7 @@ const Square = (props) => {
     props.white ? styles.white : styles.black
   } ${props.clickable ? styles.clickable : ''} ${
     props.clicked ? styles.choosen : ''
-  }`;
+  } ${props.wrong ? styles.wrong : ''} ${props.right ? styles.right : ''}`;
   return (
     <div
       className={computedClassName}
